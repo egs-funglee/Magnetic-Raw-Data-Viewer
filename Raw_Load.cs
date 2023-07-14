@@ -56,7 +56,7 @@ namespace Magnetic_Raw_Data_Viewer
             string lastfix = "-1";
 
             //search mag index on 1st MAG line, when a number is over 9999
-            foreach (string line in sRaw) 
+            foreach (string line in sRaw)
             {
                 if (line.StartsWith("MAG"))
                 {
@@ -74,7 +74,7 @@ namespace Magnetic_Raw_Data_Viewer
             }
 
             //search nav index on 1st NAV line
-            foreach (string line in sRaw) 
+            foreach (string line in sRaw)
             {
                 if (line.StartsWith("NAV"))
                 {
@@ -131,7 +131,7 @@ namespace Magnetic_Raw_Data_Viewer
                     }
 
                     //break when got the #
-                    if (fid > 0 && navstrlen > 0) break; 
+                    if (fid > 0 && navstrlen > 0) break;
                 }
             }
 
@@ -147,21 +147,29 @@ namespace Magnetic_Raw_Data_Viewer
 
                     if (s.Length >= navstrlen && s[fid].Length > 0 && index > 0 && lastfix != s[fid])
                     {
-                        data[index - 1].fix = double.Parse(s[fid]);
-                        lastfix = s[fid];
+                        try
+                        {
+                            data[index - 1].fix = double.Parse(s[fid]);
+                            lastfix = s[fid];
+                        }
+                        catch { }
                     }
                 }
 
                 if (line.StartsWith("MAG"))
                 {
                     string[] s = line.Split(chars, StringSplitOptions.RemoveEmptyEntries);
-                    Fm ifm = new Fm
+                    try
                     {
-                        fix = 0,
-                        mag = double.Parse(s[mid])
-                    };
-                    data.Add(ifm);
-                    index++;
+                        Fm ifm = new Fm
+                        {
+                            fix = 0,
+                            mag = double.Parse(s[mid])
+                        };
+                        data.Add(ifm);
+                        index++;
+                    }
+                    catch { }
                 }
             }
 
@@ -242,7 +250,7 @@ namespace Magnetic_Raw_Data_Viewer
                     fix = (int)data[0].fix,
                     mag = data[0].mag
                 };
-                data.Insert(0,dummy);
+                data.Insert(0, dummy);
             }
 
             /*            
@@ -272,7 +280,7 @@ namespace Magnetic_Raw_Data_Viewer
             public override string ToString()
             {
                 return $"{this.fix:F3}\t{this.mag:F3}";
-            }            
+            }
         }
     }
 }

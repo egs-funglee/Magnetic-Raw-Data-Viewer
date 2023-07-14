@@ -1,5 +1,5 @@
 # Magnetic-Raw-Data-Viewer
-A simple data visualizer using .NET 4.5 framework to quickly browse through magnetic raw data recorded by EGS Maglog
+A simple data visualizer using .NET 4.8 framework to quickly browse through magnetic raw data recorded by EGS Maglog
 
 You can double click the Chart Area, Click the Open raw file button or drag file onto the window to open raw file.
 
